@@ -1,9 +1,33 @@
 function getHorizontalOf (length: number, angle: number) {
     return length * Math.cos(angle * Math.PI / 180)
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.vy = -150
+})
 function getVerticleOf (length: number, angle: number) {
     return length * Math.sin(angle * Math.PI / 180)
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectileDirection = randint(0, 360)
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . 4 4 . . . . . . . 
+        . . . . . . 4 5 5 4 . . . . . . 
+        . . . . . . 2 5 5 2 . . . . . . 
+        . . . . . . . 2 2 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, getHorizontalOf(50, projectileDirection), getVerticleOf(-50, projectileDirection))
+})
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     projectileDirection = randint(0, 360)
     projectile = sprites.createProjectileFromSprite(img`
@@ -28,7 +52,7 @@ controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
 let projectile: Sprite = null
 let projectileDirection = 0
 let mySprite: Sprite = null
-scene.setBackgroundColor(1)
+scene.setBackgroundColor(15)
 mySprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -47,5 +71,9 @@ mySprite = sprites.create(img`
     . . c b d d d d d 5 5 5 b b . . 
     . . . c c c c c c c c b b . . . 
     `, SpriteKind.Player)
-controller.moveSprite(mySprite)
+controller.moveSprite(mySprite, 100, 0)
 mySprite.setStayInScreen(true)
+mySprite.ay = 300
+mySprite.fy = 400
+mySprite.setFlag(SpriteFlag.BounceOnWall, false)
+mySprite.setFlag(SpriteFlag.ShowPhysics, true)

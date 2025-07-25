@@ -2,7 +2,8 @@
     "name": "Test",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "radio-broadcast": "*"
     },
     "files": [
         "main.blocks",
